@@ -24,13 +24,14 @@ COPY . .
 
 RUN npm install --save-dev @angular-devkit/build-angular
 
-# Stage 2: Serve the app with Nginx
+RUN ng build --aot
 
+# Stage 2: Serve the app with Nginx
 FROM nginx:alpine
 
 # Copy the built files from the previous stage to Nginx's HTML folder
 
-COPY --from=0 /app/build /usr/share/nginx/html
+COPY --from=build /app/dist/skote /usr/share/nginx/html
 
 # Expose port 4300 to access the application
 
